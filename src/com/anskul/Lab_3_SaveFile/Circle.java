@@ -1,4 +1,4 @@
-package com.anskul.lab_1;
+package com.anskul.Lab_3_SaveFile;
 
 public class Circle implements IFigure {
     private double radius;

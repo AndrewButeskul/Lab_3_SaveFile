@@ -1,9 +1,11 @@
-package com.anskul.lab_1;
+package com.anskul.Lab_3_SaveFile;
 
 public class Cylinder extends Circle{
+
     private double height;
     private double square;
     private double volume;
+//    private double radius;
 
     public Cylinder(final double radius, final double height)
     {
@@ -12,10 +14,21 @@ public class Cylinder extends Circle{
         this.setSquare();
         this.setVolume();
     }
+//    public Cylinder()
+//    {
+//        //this.radius = getRadius();
+//        setHeight(height);
+//        this.setSquare();
+//        this.setVolume();
+//    }
 
     public double getVolume()
     {
         return volume;
+    }
+
+    public double getHeight() {
+        return height;
     }
 
     public void setHeight(double height)
@@ -45,4 +58,9 @@ public class Cylinder extends Circle{
     {
         this.volume = Math.round(Math.PI * Math.pow(getRadius(), 2) * height);
     }
+
+//    @Override
+//    public double getRadius() {
+//        return radius;
+//    }
 }
