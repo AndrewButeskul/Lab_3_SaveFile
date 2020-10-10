@@ -9,6 +9,36 @@ import java.util.Scanner;
 
 public class FileWorker {
 
+    public void serialize(String filename, ArrayList<Circle> circles,ArrayList<Cylinder> cylinders) throws IOException {
+
+        try {
+            FileOutputStream fos = new FileOutputStream(filename);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(circles);
+            oos.writeObject(cylinders);
+            oos.close();
+            fos.close();
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void deserialize(String filename, ArrayList<Circle> circles,ArrayList<Cylinder> cylinders) throws IOException {
+
+        try {
+            FileInputStream fis = new FileInputStream(filename);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            circles = (ArrayList<Circle>) ois.readObject();
+            cylinders = (ArrayList<Cylinder>) ois.readObject();
+            ois.close();
+            fis.close();
+        }
+        catch (IOException | ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+    }
+
     public void save(String filename, ArrayList<Circle> circles,ArrayList<Cylinder> cylinders) throws IOException {
         FileWriter fw = new FileWriter(filename);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -30,8 +60,6 @@ public class FileWorker {
                 e.printStackTrace();
             }
         }
-
-
         bw.close();
         fw.close();
     }

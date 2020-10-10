@@ -20,12 +20,16 @@ public class Main {
         cylinders.cylinders.add(new Cylinder(circles.circles.get(3).getRadius(), 4));
 
         FileWorker fileWorker = new FileWorker();
-        fileWorker.save("testfile.txt",circles.circles,cylinders.cylinders);
+//        fileWorker.save("testfile.txt",circles.circles,cylinders.cylinders);
+//        circles.clear();
+//        cylinders.clear();
+//        fileWorker.read("testfile.txt",circles.circles,cylinders.cylinders);
 
+        fileWorker.serialize("data_ser.txt", circles.circles,cylinders.cylinders);
         circles.clear();
         cylinders.clear();
+        fileWorker.deserialize("data_ser.txt", circles.circles,cylinders.cylinders);
 
-        fileWorker.read("testfile.txt",circles.circles,cylinders.cylinders);
 
         System.out.println(circles.circles.toString().replace("[", "").replace("]", ""));
         System.out.println(cylinders.cylinders.toString().replace("[", "").replace("]", ""));

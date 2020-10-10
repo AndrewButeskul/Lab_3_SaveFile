@@ -1,6 +1,8 @@
 package com.anskul.Lab_3_SaveFile;
 
-public class Circle implements IFigure {
+import java.io.Serializable;
+
+public class Circle implements IFigure, Serializable {
     private double radius;
     private double length;
     private double square;

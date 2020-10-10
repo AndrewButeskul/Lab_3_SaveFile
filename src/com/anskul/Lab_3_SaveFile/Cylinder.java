@@ -1,6 +1,8 @@
 package com.anskul.Lab_3_SaveFile;
 
-public class Cylinder extends Circle{
+import java.io.Serializable;
+
+public class Cylinder extends Circle implements Serializable {
 
     private double height;
     private double square;
