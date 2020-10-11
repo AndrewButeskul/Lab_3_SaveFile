@@ -6,36 +6,42 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        Circles circles = new Circles();
-        Cylinders cylinders = new Cylinders();
 
-        circles.circles.add(new Circle(5));
-        circles.circles.add(new Circle(10));
-        circles.circles.add(new Circle(6));
-        circles.circles.add(new Circle(8));
+        Database db = new Database();
 
-        cylinders.cylinders.add(new Cylinder(circles.circles.get(0).getRadius(), 5));
-        cylinders.cylinders.add(new Cylinder(circles.circles.get(1).getRadius(), 22));
-        cylinders.cylinders.add(new Cylinder(circles.circles.get(2).getRadius(), 12));
-        cylinders.cylinders.add(new Cylinder(circles.circles.get(3).getRadius(), 4));
+        db.circles.add(new Circle(5));
+        db.circles.add(new Circle(10));
+        db.circles.add(new Circle(6));
+        db.circles.add(new Circle(8));
+
+        db.cylinders.add(new Cylinder(db.circles.get(0).getRadius(), 5));
+        db.cylinders.add(new Cylinder(db.circles.get(1).getRadius(), 22));
+        db.cylinders.add(new Cylinder(db.circles.get(2).getRadius(), 12));
+        db.cylinders.add(new Cylinder(db.circles.get(3).getRadius(), 4));
 
         FileWorker fileWorker = new FileWorker();
-//        fileWorker.save("testfile.txt",circles.circles,cylinders.cylinders);
-//        circles.clear();
-//        cylinders.clear();
-//        fileWorker.read("testfile.txt",circles.circles,cylinders.cylinders);
 
-        fileWorker.serialize("data_ser.txt", circles.circles,cylinders.cylinders);
-        circles.clear();
-        cylinders.clear();
-        fileWorker.deserialize("data_ser.txt", circles.circles,cylinders.cylinders);
+        fileWorker.save("testfile.txt",db.circles, db.cylinders);
+        db.clear();
+        fileWorker.read("testfile.txt",db.circles, db.cylinders);
 
+        //----------------------------------------------------------------
 
-        System.out.println(circles.circles.toString().replace("[", "").replace("]", ""));
-        System.out.println(cylinders.cylinders.toString().replace("[", "").replace("]", ""));
+        fileWorker.serialize("data_ser.txt", db.circles, db.cylinders);
+        db.clear();
+        db = fileWorker.deserialize("data_ser.txt", db.circles, db.cylinders);
 
-        System.out.println(circles.maxSquare(circles.circles));
-        System.out.println(cylinders.averageVolume(cylinders.cylinders));
+        //-----------------------------------------------------------------
+
+        fileWorker.serializeFastjson("data_json.json", db.circles, db.cylinders);
+        db.clear();
+        db = fileWorker.deserializeFastjson("data_json.json", db.circles, db.cylinders);
+
+        System.out.println(db.circles.toString().replace("[", "").replace("]", ""));
+        System.out.println(db.cylinders.toString().replace("[", "").replace("]", ""));
+
+        System.out.println(db.maxSquare(db.circles));
+        System.out.println(db.averageVolume(db.cylinders));
     }
 
 }

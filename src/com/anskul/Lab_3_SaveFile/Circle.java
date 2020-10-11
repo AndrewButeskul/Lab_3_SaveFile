@@ -17,6 +17,12 @@ public class Circle implements IFigure, Serializable {
 
     public Circle(){}
 
+    public Circle(Double length, Double radius, Double square) {
+        this.length = length;
+        this.radius = radius;
+        this.square = square;
+    }
+
     public void setLength()
     {
         this.length = Math.round(2 * Math.PI * this.radius);

@@ -1,15 +1,17 @@
 package com.anskul.Lab_3_SaveFile;
 
-import com.anskul.Lab_3_SaveFile.Circles;
-import com.anskul.Lab_3_SaveFile.Cylinders;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
 
 public class FileWorker {
 
-    public void serialize(String filename, ArrayList<Circle> circles,ArrayList<Cylinder> cylinders) throws IOException {
+    //--------------Serialize---------------
+
+    public Database serialize(String filename, ArrayList<Circle> circles,ArrayList<Cylinder> cylinders) throws IOException {
 
         try {
             FileOutputStream fos = new FileOutputStream(filename);
@@ -22,9 +24,10 @@ public class FileWorker {
         catch (IOException ex){
             ex.printStackTrace();
         }
+        return new Database(circles, cylinders);
     }
 
-    public void deserialize(String filename, ArrayList<Circle> circles,ArrayList<Cylinder> cylinders) throws IOException {
+    public Database deserialize(String filename, ArrayList<Circle> circles,ArrayList<Cylinder> cylinders) throws IOException {
 
         try {
             FileInputStream fis = new FileInputStream(filename);
@@ -37,7 +40,44 @@ public class FileWorker {
         catch (IOException | ClassNotFoundException ex){
             ex.printStackTrace();
         }
+        return new Database(circles, cylinders);
     }
+
+    //-----------------------JSON----------------------------
+
+    public void serializeFastjson(String filename, ArrayList<Circle> circles,ArrayList<Cylinder> cylinders) throws IOException {
+        FileWriter os = new FileWriter(filename);
+        BufferedWriter bw = new BufferedWriter(os);
+        bw.write(JSON.toJSONString(circles));
+        bw.write("\n");
+        bw.write(JSON.toJSONString(cylinders));
+        bw.close();
+        os.close();
+    }
+
+    public Database deserializeFastjson(String filename, ArrayList<Circle> circles,ArrayList<Cylinder> cylinders) throws IOException {
+
+        FileReader fr = new FileReader(filename);
+        Scanner scanner = new Scanner(fr);
+        Circle c = null;
+
+        ArrayList<JSONObject> JSONlist = JSON.parseObject(scanner.nextLine(), ArrayList.class);
+        for (JSONObject st : JSONlist) {
+            circles.add(new Circle(st.getDouble("length"), st.getDouble("radius"),st.getDouble("square")));
+        }
+
+        JSONlist = JSON.parseObject(scanner.nextLine(), ArrayList.class);
+        for (JSONObject st : JSONlist) {
+            cylinders.add(new Cylinder( st.getDouble("height"), st.getDouble("radius"),st.getDouble("square"),st.getDouble("volume")));
+        }
+
+        scanner.close();
+        fr.close();
+
+        return new Database(circles, cylinders);
+    }
+
+    //--------------------------------------------------
 
     public void save(String filename, ArrayList<Circle> circles,ArrayList<Cylinder> cylinders) throws IOException {
         FileWriter fw = new FileWriter(filename);

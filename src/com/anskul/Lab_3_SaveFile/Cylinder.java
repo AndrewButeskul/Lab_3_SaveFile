@@ -16,6 +16,14 @@ public class Cylinder extends Circle implements Serializable {
         this.setSquare();
         this.setVolume();
     }
+
+    public Cylinder(Double height, Double radius, Double square, Double volume) {
+        super(radius);
+        this.height = height;
+        this.square = square;
+        this.volume = volume;
+
+    }
 //    public Cylinder()
 //    {
 //        //this.radius = getRadius();
